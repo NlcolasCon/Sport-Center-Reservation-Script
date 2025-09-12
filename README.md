@@ -1,6 +1,6 @@
-# UCY Gym Auto-Reservation
+# Sport Center Reservation Script
 
-Automates booking a UCY Sports Center slot at **20:15** for the day **5 days ahead**.  
+Automates booking a Sport Center Reservation slot at **20:15** for the day **5 days ahead**.  
 Runs with **Playwright** and can be scheduled to fire at **08:00**, Wednesday → Monday.
 
 > Educational use only. Respect the Sports Center's rules and booking policies.
@@ -41,29 +41,19 @@ python reserve.py
 - Successful runs: a screenshot is saved in `runs/success_*.png`.
 
 ## Scheduling
-
-See **[docs/SCHEDULING.md](docs/SCHEDULING.md)** for:
-- Windows Task Scheduler (recommended)
-- Cron (Linux)
 - Self-scheduler loop (`scheduler.py`)
 
 ## Repo layout
 ```
-ucy-gym-reserver/
+Sport-Center-Reservation-Script/
 ├─ reserve.py          # main booking script
 ├─ save_state.py       # one-time login to create state.json
 ├─ scheduler.py        # optional self-scheduler that runs reserve.py at 08:00
 ├─ requirements.txt
 ├─ .gitignore
 ├─ LICENSE
-├─ docs/
-│  ├─ SCHEDULING.md
-│  └─ TROUBLESHOOTING.md
-└─ tasks/
-   ├─ windows_task_wsl.xml       # importable Task for WSL Python
-   └─ windows_task_python.xml    # importable Task for native Windows Python
 ```
 
 ## Notes
 - `state.json` and `runs/` are ignored from git for privacy and cleanliness.
-- If UCY logs you out periodically, just run `python save_state.py` again to refresh cookies.
+- If the sport center logs you out periodically, just run `python save_state.py` again to refresh cookies.
