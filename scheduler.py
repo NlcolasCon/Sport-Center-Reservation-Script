@@ -1,7 +1,13 @@
 # scheduler.py
-import time, subprocess, datetime as dt
-# Allowed days: Mon=1 .. Sun=7; skip Tue(2)
+import time, subprocess, datetime as dt, sys, os
+
+# Mon=1..Sun=7; run Wed→Mon (skip Tue=2)
 ALLOWED = {1,3,4,5,6,7}
+
+USERS = [
+    {"state": "state_user1.json", "tag": "user1"},
+    {"state": "state_user2.json", "tag": "user2"},
+]
 
 def should_run_now():
     now = dt.datetime.now()
@@ -9,14 +15,14 @@ def should_run_now():
 
 while True:
     if should_run_now():
-        try:
-            subprocess.run(
-                ["python3", "reserve.py"],
-                cwd=None,  # current dir
-                check=False
-            )
-        except Exception as e:
-            print("Run failed:", e)
-        time.sleep(61)  # avoid double-runs in the same minute
+        for u in USERS:
+            try:
+                subprocess.run(
+                    ["python", "reserve.py", "--state", u["state"], "--tag", u["tag"], "--headless"],
+                    check=False
+                )
+            except Exception as e:
+                print(f"[ERR] {u['tag']} run failed:", e)
+        time.sleep(61)   # avoid multiple runs in the same minute
     else:
         time.sleep(5)
